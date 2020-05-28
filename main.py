@@ -6,8 +6,12 @@ import random
 # Screen
 wn = turtle.Screen()
 wn.bgcolor("black")
-wn.title("Space Invaders")
+wn.title("Space Invaders by @carvalhojg")
+wn.bgpic("/Users/joaogabriel/Desktop/Projects/Python Games/Space Invaders/space_invaders_background.gif")
 
+# Register shapes
+wn.register_shape("/Users/joaogabriel/Desktop/Projects/Python Games/Space Invaders/invader.gif")
+wn.register_shape("/Users/joaogabriel/Desktop/Projects/Python Games/Space Invaders/player.gif")
 
 ## Border
 border_pen = turtle.Turtle()
@@ -39,12 +43,12 @@ score_pen.hideturtle()
 # Player
 player = turtle.Turtle()
 player.color("blue")
-player.shape("triangle")
+player.shape("/Users/joaogabriel/Desktop/Projects/Python Games/Space Invaders/player.gif")
 player.penup()
 player.speed(0)
 player.setposition(0, -250)
 player.setheading(90)
-player.speed = 0
+player.speed = 15
 
 ### Move to the left
 def move_left():
@@ -127,7 +131,7 @@ for i in range(number_of_enemies):
 
 for enemy in enemies:
     enemy.color("red")
-    enemy.shape("circle")
+    enemy.shape("/Users/joaogabriel/Desktop/Projects/Python Games/Space Invaders/invader.gif")
     enemy.penup()
     enemy.speed(0)
     x = random.randint(-200, 200)

@@ -73,6 +73,7 @@ def fire_bullet():
     # Declare bulletstate as global if it needs change
     global bulletstate
     if bulletstate == "ready":
+        os.system("afplay shoot.wav&")
         bulletstate = "fire"
         # Move bullet
         x = player.xcor()
@@ -89,20 +90,20 @@ def isCollision(t1, t2):
 
 
 # Keyboard bindings
-turtle.listen()
-turtle.onkey(move_left, "Left")
-turtle.onkey(move_right, "Right")
-turtle.onkey(fire_bullet, "space")
+wn.listen()
+wn.onkey(move_left, "Left")
+wn.onkey(move_right, "Right")
+wn.onkey(fire_bullet, "space")
 
 
 # Player bullet
 bullet = turtle.Turtle()
 bullet.color("yellow")
-bullet.shape("triangle")
+bullet.shape("square")
 bullet.penup()
 bullet.speed(0)
 bullet.setheading(90)
-bullet.shapesize(0.5, 0.5)
+bullet.shapesize(0.2, 0.2)
 bullet.hideturtle()
 
 bulletspeed = 20
@@ -174,6 +175,7 @@ while True:
             score_pen.write(scorestring, False, align="left", font=("Arial", 14, "normal"))
 
         if isCollision(player, enemy):
+            os.system("afplay invaderkilled.wav&")
             player.hideturtle()
             enemy.hideturtle()
             print("GAME OVER")
@@ -195,5 +197,3 @@ while True:
         enemy.hideturtle()
         print("GAME OVER")
         break
-
-delay = input("Press enter to finish")

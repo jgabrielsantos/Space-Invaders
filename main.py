@@ -22,6 +22,19 @@ for side in range(4):
     border_pen.lt(90)
 border_pen.hideturtle()
 
+# Score
+score = 0
+
+## Draw score
+score_pen = turtle.Turtle()
+score_pen.speed(0)
+score_pen.color("white")
+score_pen.penup()
+score_pen.setposition(-290, 280)
+scorestring = 'Score: {}'.format(score)
+score_pen.write(scorestring, False, align="left", font=("Arial", 14, "normal"))
+score_pen.hideturtle()
+
 
 # Player
 player = turtle.Turtle()
@@ -154,6 +167,12 @@ while True:
             y = random.randint(100, 250)
             enemy.setposition(x, y)
 
+            # Update score
+            score += 10
+            scorestring = 'Score: {}'.format(score)
+            score_pen.clear()
+            score_pen.write(scorestring, False, align="left", font=("Arial", 14, "normal"))
+
         if isCollision(player, enemy):
             player.hideturtle()
             enemy.hideturtle()
@@ -170,16 +189,6 @@ while True:
     if bullet.ycor() > 275:
         bullet.hideturtle()
         bulletstate = "ready"
-
-    # Check for bullet/enemy collision
-    if isCollision(bullet, enemy):
-        # reset bullet
-        bullet.hideturtle()
-        bulletstate = "ready"
-        bullet.setposition(0, -400)
-
-        # reset enemy
-        enemy.setposition(-200, 250)
 
     if isCollision(player, enemy):
         player.hideturtle()

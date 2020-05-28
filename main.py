@@ -44,24 +44,26 @@ player.penup()
 player.speed(0)
 player.setposition(0, -250)
 player.setheading(90)
-
-## Player movement
-playerspeed = 15
+player.speed = 0
 
 ### Move to the left
 def move_left():
-    x = player.xcor()
-    x -= playerspeed
-    if x < -280:
-        x = - 280
-    player.setx(x)
+    player.speed = -15
 
 ### Move to the right
 def move_right():
+    player.speed = 15
+
+def move_player():
     x = player.xcor()
-    x += playerspeed
+    x += player.speed
+
+    if x < -280:
+        x = - 280
+
     if x > 280:
         x = 280
+
     player.setx(x)
 
 ## Bullet
@@ -138,6 +140,8 @@ enemyspeed = 2
 
 # Game loop
 while True:
+
+    move_player()
 
     for enemy in enemies:
         # Move enemy

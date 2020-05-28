@@ -131,19 +131,16 @@ while True:
         x += enemyspeed
         enemy.setx(x)
 
-        # Move enemy down and bounce on the right side
-        if enemy.xcor() > 280:
-            y = enemy.ycor()
-            y -= 40
+        # Move enemy down and change direction
+        if enemy.xcor() > 280 or enemy.xcor() < -280:
+            # Move all enemies down
+            for e in enemies:
+                y = e.ycor()
+                y -= 40
+                e.sety(y)
+            #Change direction
             enemyspeed *= -1
-            enemy.sety(y)
 
-        # Move enemy down and bounce on left side
-        if enemy.xcor() < -280:
-            y = enemy.ycor()
-            y -= 40
-            enemyspeed *= -1
-            enemy.sety(y)
 
         # Check for bullet/enemy collision
         if isCollision(bullet, enemy):

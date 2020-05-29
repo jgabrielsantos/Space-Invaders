@@ -2,13 +2,16 @@ import turtle
 import os
 import math
 import random
-import wave
+import platform
+
+
 
 # Screen
 wn = turtle.Screen()
 wn.bgcolor("black")
 wn.title("Space Invaders by @carvalhojg")
 wn.bgpic("/Users/joaogabriel/Desktop/Projects/Python Games/Space Invaders/space_invaders_background.gif")
+wn.tracer(0)
 
 # Register shapes
 wn.register_shape("/Users/joaogabriel/Desktop/Projects/Python Games/Space Invaders/invader.gif")
@@ -43,21 +46,20 @@ score_pen.hideturtle()
 
 # Player
 player = turtle.Turtle()
-player.color("blue")
 player.shape("/Users/joaogabriel/Desktop/Projects/Python Games/Space Invaders/player.gif")
 player.penup()
 player.speed(0)
 player.setposition(0, -250)
 player.setheading(90)
-player.speed = 15
+player.speed = 0
 
 ### Move to the left
 def move_left():
-    player.speed = -15
+    player.speed = -3
 
 ### Move to the right
 def move_right():
-    player.speed = 15
+    player.speed = 3
 
 def move_player():
     x = player.xcor()
@@ -104,22 +106,19 @@ wn.onkey(fire_bullet, "space")
 
 # Player bullet
 bullet = turtle.Turtle()
-bullet.color("yellow")
+bullet.color("white")
 bullet.shape("square")
 bullet.penup()
 bullet.speed(0)
 bullet.setheading(90)
 bullet.shapesize(0.2, 0.2)
 bullet.hideturtle()
-
-bulletspeed = 20
-
-
+bulletspeed = 7
 
 
 # Enemy
 ## Number of enemies
-number_of_enemies = 5
+number_of_enemies = 30
 
 ## List of enemies
 enemies = []
@@ -129,22 +128,31 @@ for i in range(number_of_enemies):
     # Create enemy
     enemies.append(turtle.Turtle())
 
+enemy_start_x = -225
+enemy_start_y = 250
+enemy_number = 0
+
 for enemy in enemies:
-    enemy.color("red")
     enemy.shape("/Users/joaogabriel/Desktop/Projects/Python Games/Space Invaders/invader.gif")
     enemy.penup()
     enemy.speed(0)
-    x = random.randint(-200, 200)
-    y = random.randint(100, 250)
+    x = enemy_start_x + (50 * enemy_number)
+    y = enemy_start_y
     enemy.setposition(x, y)
+    
+    # Update enemy number
+    enemy_number += 1
+    if enemy_number == 10:
+        enemy_start_y -= 50
+        enemy_number = 0
 
-enemyspeed = 2
+enemyspeed = 0.5
 
 
 
 # Game loop
 while True:
-
+    wn.update()
     move_player()
 
     for enemy in enemies:
@@ -171,10 +179,8 @@ while True:
             bulletstate = "ready"
             bullet.setposition(0, -400)
 
-            # reset enemy
-            x = random.randint(-200, 200)
-            y = random.randint(100, 250)
-            enemy.setposition(x, y)
+            # Reset enemy
+            enemy.hideturtle()
 
             # Update score
             score += 10
@@ -199,7 +205,19 @@ while True:
         bullet.hideturtle()
         bulletstate = "ready"
 
+    if score == 300:
+        player.hideturtle()
+        enemy.hideturtle()
+        print("GAME OVER")
+        break
+
     if isCollision(player, enemy):
+        player.hideturtle()
+        enemy.hideturtle()
+        print("GAME OVER")
+        break
+
+    if enemy.ycor() == -270:
         player.hideturtle()
         enemy.hideturtle()
         print("GAME OVER")

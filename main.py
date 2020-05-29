@@ -2,6 +2,7 @@ import turtle
 import os
 import math
 import random
+import wave
 
 # Screen
 wn = turtle.Screen()
@@ -79,7 +80,6 @@ def fire_bullet():
     # Declare bulletstate as global if it needs change
     global bulletstate
     if bulletstate == "ready":
-        os.system("afplay shoot.wav&")
         bulletstate = "fire"
         # Move bullet
         x = player.xcor()
@@ -183,7 +183,6 @@ while True:
             score_pen.write(scorestring, False, align="left", font=("Arial", 14, "normal"))
 
         if isCollision(player, enemy):
-            os.system("afplay invaderkilled.wav&")
             player.hideturtle()
             enemy.hideturtle()
             print("GAME OVER")
